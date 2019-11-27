@@ -2,10 +2,42 @@
   "posts": [
     {
       "id": 1,
-      "title": "hello"
+      "title": "Nike Court Boro Mid",
+      "seller": "Amazon",
+      "price": "$90"
+    },
+     {
+      "id": 2,
+      "title": "Nike Court Boro Mid",
+      "seller": "Nike",
+      "price": "$95"
+    },
+     {
+      "id": 3,
+      "title": "Nike Court Boro Mid",
+      "seller": "eFootWear",
+      "price": "$85"
+    },
+     {
+      "id": 4,
+      "title": "Levis",
+      "seller": "Amazon",
+      "price": "$70"
+    },
+     {
+      "id": 5,
+      "title": "Levis",
+      "seller": "eFootWear",
+      "price": "$72"
+    },
+     {
+      "id": 6,
+      "title": "Levis",
+      "seller": "Levis",
+      "price": "$78"
     }
   ],
   "profile": {
-    "name": "typicode"
+    "name": "SavARy"
   }
 }
