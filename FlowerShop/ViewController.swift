@@ -28,44 +28,53 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
-    func makeGetCall(shoeName: String) -> (Shoe){
+    func makeGetCall(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Error?) -> Void){
     guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
     var model = [Shoe]()
-    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+    let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
     guard let dataResponse = data,
           error == nil else {
           print(error?.localizedDescription ?? "Response Error")
-          return model}  
-    do{ 
+          return }
+    do{
             let jsonResponse = try JSONSerialization.jsonObject(with:
-                                dataResponse, options: []) 
-            //print(jsonResponse) 
+                                dataResponse, options: [])
+            //print(jsonResponse)
             guard let jsonArray = jsonResponse as? [[String: Any]] else {
-            return model
+            return
             }
             //print(jsonArray)
             
-            model = jsonArray.flatMap{ (dictionary) in
+            model = jsonArray.compactMap{ (dictionary) in
                 return Shoe(dictionary)
+            
             }
-            print(model[0].seller)
-            print(model[0].price)
-            print(model[1].seller)
-            print(model[1].price)
-            print(model[2].seller)
-            print(model[2].price)
-            return model
-        } 
-            catch let parsingError {
-                print("Error", parsingError) 
-            }
+            userCompletionHandler(model,nil)
         }
+            catch let parsingError {
+                print("Error", parsingError)
+                userCompletionHandler(nil,parsingError)
+            }
+        })
         task.resume()
     }
     
     override func viewDidLoad() {
-        makeGetCall(shoeName: "Nike Court Boro Mid")
-        makeGetCall(shoeName: "Levi")
+       
+        super.viewDidLoad()
+        //sample call
+        makeGetCall (shoeName: "Levi", userCompletionHandler: { shoe, error in
+            if let shoe = shoe {
+                print(shoe[0].seller)
+                print(shoe[0].price)
+                print(shoe[1].seller)
+                print(shoe[1].price)
+                print(shoe[2].seller)
+                print(shoe[2].price)
+            }
+        })
+
+        //makeGetCall(shoeName: "Levi")
         super.viewDidLoad()
         
         // Set the view's delegate
@@ -124,7 +133,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planeNode.eulerAngles.x = -.pi/2
             
             let shoeName = imageAnchor.referenceImage.name!
-            
+
             //Get Shoe Details
           
             
