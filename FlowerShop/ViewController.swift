@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
-    func makeGetCall(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Error?) -> Void){
+    func getShoeInfo(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Error?) -> Void){
     guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
     var model = [Shoe]()
     let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
@@ -63,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
        
         super.viewDidLoad()
         //sample call
-        makeGetCall (shoeName: "Levi", userCompletionHandler: { shoe, error in
+        getShoeInfo (shoeName: "Levi", userCompletionHandler: { shoe, error in
             if let shoe = shoe {
                 print(shoe[0].seller)
                 print(shoe[0].price)
@@ -74,7 +74,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         })
 
-        //makeGetCall(shoeName: "Levi")
+        //getShoeInfo(shoeName: "Levi")
         super.viewDidLoad()
         
         // Set the view's delegate
