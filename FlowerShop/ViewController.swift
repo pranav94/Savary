@@ -37,7 +37,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         
         // Image Detection
-        configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "FlowerObjects", bundle: Bundle.main)!
+        configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "ShoeObjects", bundle: Bundle.main)!
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -72,9 +72,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             planeNode.eulerAngles.x = -.pi/2
             
+            let shoeName = imageAnchor.referenceImage.name!
+            
             let labelNode = spriteKitScene?.childNode(withName: "label") as? SKLabelNode
-            labelNode?.text = imageAnchor.referenceImage.name
+            labelNode?.text = shoeName
 
+            let imageNode = spriteKitScene?.childNode(withName: "image") as? SKSpriteNode
+            imageNode?.texture = SKTexture(imageNamed: shoeName+"-image.jpeg")
             
             node.addChildNode(planeNode)
             
