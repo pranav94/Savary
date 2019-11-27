@@ -28,22 +28,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
-    func makeGetCall(shoeName: String){
+    func makeGetCall(shoeName: String) -> (Shoe){
     guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
+    var model = [Shoe]()
     let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
     guard let dataResponse = data,
           error == nil else {
           print(error?.localizedDescription ?? "Response Error")
-          return }  
+          return model}  
     do{ 
             let jsonResponse = try JSONSerialization.jsonObject(with:
                                 dataResponse, options: []) 
             //print(jsonResponse) 
             guard let jsonArray = jsonResponse as? [[String: Any]] else {
-            return 
+            return model
             }
             //print(jsonArray)
-            var model = [Shoe]()
+            
             model = jsonArray.flatMap{ (dictionary) in
                 return Shoe(dictionary)
             }
@@ -53,6 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             print(model[1].price)
             print(model[2].seller)
             print(model[2].price)
+            return model
         } 
             catch let parsingError {
                 print("Error", parsingError) 
