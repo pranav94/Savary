@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
-    func makeGetCall(shoeName: String){
+    func makeGetCall(shoeName: String)-> [AnyObject]{
     guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
     let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
     guard let dataResponse = data,
@@ -53,7 +53,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             print(model[1].price)
             print(model[2].seller)
             print(model[2].price)
-            return model
         } 
             catch let parsingError {
                 print("Error", parsingError) 
@@ -125,16 +124,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let shoeName = imageAnchor.referenceImage.name!
             
             //Get Shoe Details
-            var modeldetails = makeGetCall(shoeName: shoeName)
-            
-            let seller1 = modeldetails[0].seller
-            let price1 = modeldetails[0].price
-
-            let seller2 = modeldetails[1].seller
-            let price2 = modeldetails[1].price
-
-            let seller3 = modeldetails[2].seller
-            let price3 = modeldetails[2].price
+          
             
             let labelNode = spriteKitScene?.childNode(withName: "label") as? SKLabelNode
             labelNode?.text = shoeName
