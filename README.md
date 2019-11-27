@@ -1,7 +1,3 @@
-# ARKit 2 Tutorial: Create an AR Shopping Experience - Scan & Detect Real 3D Objects
+Price comparison shopping is part of the new reality of the retail sector as more and more customers use smartphones in stores to search and compare prices. SaveARy promotes that activity and makes it extremely easy to do through essentially a one-click function rather than a process under which mobile users would be taking more time to search via Google, Amazon and other retailer web sites. 
 
-Learn how to scan real world objects to detect them in your app with ARKit and create a stunning AR shopping experience.
-
-➡️ [Video on YouTube](https://youtu.be/FEqBW3cKF2k)
-
-[![Video](https://img.youtube.com/vi/FEqBW3cKF2k/0.jpg)](https://www.youtube.com/watch?v=FEqBW3cKF2k)
+SaveAry is an augmented reality app that allows users to scan a product using the smartphone camera and view the availability of the product and competitive prices offered by different e-commerce sites, thus enabling the users to have an effective and efficient shopping experience.
