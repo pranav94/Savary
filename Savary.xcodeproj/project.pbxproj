@@ -14,6 +14,7 @@
 		5215969020D27462006E670B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5215968F20D27462006E670B /* Assets.xcassets */; };
 		5215969320D27462006E670B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5215969120D27462006E670B /* LaunchScreen.storyboard */; };
 		5215969B20D28BD2006E670B /* ProductInfo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5215969A20D28BD2006E670B /* ProductInfo.sks */; };
+		81F93C0D238F16280052D0B5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F93C0C238F16280052D0B5 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		5215969220D27462006E670B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5215969420D27462006E670B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5215969A20D28BD2006E670B /* ProductInfo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ProductInfo.sks; sourceTree = "<group>"; };
+		81F93C0C238F16280052D0B5 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				5215968F20D27462006E670B /* Assets.xcassets */,
 				5215969120D27462006E670B /* LaunchScreen.storyboard */,
 				5215969420D27462006E670B /* Info.plist */,
+				81F93C0C238F16280052D0B5 /* Utils.swift */,
 			);
 			path = FlowerShop;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 			files = (
 				5215968B20D27461006E670B /* ViewController.swift in Sources */,
 				5215968720D27461006E670B /* AppDelegate.swift in Sources */,
+				81F93C0D238F16280052D0B5 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

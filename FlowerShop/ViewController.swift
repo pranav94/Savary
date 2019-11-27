@@ -1,9 +1,6 @@
 //
 //  ViewController.swift
-//  FlowerShop
-//
-//  Created by Brian Advent on 14.06.18.
-//  Copyright © 2018 Brian Advent. All rights reserved.
+//  Savary
 //
 
 import UIKit
@@ -13,105 +10,27 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
      @IBOutlet var sceneView: ARSCNView!
-
-    struct Shoe {
-        var id: Int
-        var title: String
-        var seller: String
-        var price: String
-      
-        init(_ dictionary: [String: Any]) {
-        self.id = dictionary["id"] as? Int ?? 0
-        self.title = dictionary["title"] as? String ?? ""
-        self.seller = dictionary["seller"] as? String ?? ""
-        self.price = dictionary["price"] as? String ?? ""
-        }
-    }
-
-    func getShoeInfo(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Error?) -> Void){
-    guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
-    var model = [Shoe]()
-    let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-    guard let dataResponse = data,
-          error == nil else {
-          print(error?.localizedDescription ?? "Response Error")
-          return }
-    do{
-            let jsonResponse = try JSONSerialization.jsonObject(with:
-                                dataResponse, options: [])
-            //print(jsonResponse)
-            guard let jsonArray = jsonResponse as? [[String: Any]] else {
-            return
-            }
-            //print(jsonArray)
-            
-            model = jsonArray.compactMap{ (dictionary) in
-                return Shoe(dictionary)
-            
-            }
-            userCompletionHandler(model,nil)
-        }
-            catch let parsingError {
-                print("Error", parsingError)
-                userCompletionHandler(nil,parsingError)
-            }
-        })
-        task.resume()
-    }
     
     override func viewDidLoad() {
-       
         super.viewDidLoad()
-        //sample call
-        getShoeInfo (shoeName: "Levi", userCompletionHandler: { shoe, error in
-            if let shoe = shoe {
-                print(shoe[0].seller)
-                print(shoe[0].price)
-                print(shoe[1].seller)
-                print(shoe[1].price)
-                print(shoe[2].seller)
-                print(shoe[2].price)
-            }
-        })
-
-        //getShoeInfo(shoeName: "Levi")
-        super.viewDidLoad()
-        
-        // Set the view's delegate
         sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
-        // Create a new scene
         let scene = SCNScene(named: "art.scnassets/GameScene.scn")!
-        
-        // Set the scene to the view
         sceneView.scene = scene
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        
-        // Image Detection
         configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "ShoeObjects", bundle: Bundle.main)!
-
-        // Run the view's session
         sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // Pause the view's session
         sceneView.session.pause()
     }
 
-    // MARK: - ARSCNViewDelegate
-    
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         
         let node = SCNNode()
@@ -128,15 +47,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             plane.firstMaterial?.diffuse.contentsTransform = SCNMatrix4Translate(SCNMatrix4MakeScale(1, -1, 1), 0, 1, 0)
             
             let planeNode = SCNNode(geometry: plane)
-//            planeNode.position = SCNVector3Make(imageAnchor.referenceImage.center.x, imageAnchor.referenceImage.center.y + 0.35, imageAnchor.referenceImage.center.z)
-            
             planeNode.eulerAngles.x = -.pi/2
             
             let shoeName = imageAnchor.referenceImage.name!
 
-            //Get Shoe Details
+            let priceNode1 = spriteKitScene?.childNode(withName: "Price1") as? SKLabelNode
+            let priceNode2 = spriteKitScene?.childNode(withName: "Price2") as? SKLabelNode
+            let priceNode3 = spriteKitScene?.childNode(withName: "Price3") as? SKLabelNode
+
+            getShoeInfo (shoeName: shoeName, userCompletionHandler: { shoe, error in
+                if let shoe = shoe {
+                    priceNode1?.text = shoe[0].seller + ": " + shoe[0].price
+                    priceNode2?.text = shoe[1].seller + ": " + shoe[1].price
+                    priceNode3?.text = shoe[2].seller + ": " + shoe[2].price
+                }
+            })
           
-            
             let labelNode = spriteKitScene?.childNode(withName: "label") as? SKLabelNode
             labelNode?.text = shoeName
 
@@ -148,21 +74,5 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         return node
-    }
-    
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
     }
 }
