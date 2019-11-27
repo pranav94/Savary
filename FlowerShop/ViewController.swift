@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
-    func makeGetCall(shoeName: String)-> [AnyObject]{
+    func makeGetCall(shoeName: String){
     guard let url = URL(string: "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName) else {return}
     let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
     guard let dataResponse = data,
