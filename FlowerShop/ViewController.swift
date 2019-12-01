@@ -17,6 +17,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         let scene = SCNScene(named: "art.scnassets/GameScene.scn")!
         sceneView.scene = scene
+        let image: UIImage = UIImage(named: "logo-no-bg")!
+        let imageView = UIImageView(image: image)
+        imageView.frame = CGRect(x: 20, y: 40, width: 40, height: 40)
+        self.view.addSubview(imageView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,9 +40,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let node = SCNNode()
         
         if let imageAnchor = anchor as? ARImageAnchor {
-            let plane = SCNPlane(width: 0.6, height: 0.3)
+            let plane = SCNPlane(width: 0.45, height: 0.225)
             
-            plane.cornerRadius = plane.width / 32
+            plane.cornerRadius = plane.width / 64
             
             let spriteKitScene = SKScene(fileNamed: "ProductInfo")
             
@@ -48,18 +52,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             let planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi/2
+            planeNode.position = SCNVector3(0, -0.6, 0)
             
             let shoeName = imageAnchor.referenceImage.name!
 
+            let merchantNode1 = spriteKitScene?.childNode(withName: "Merchant1") as? SKLabelNode
+            let merchantNode2 = spriteKitScene?.childNode(withName: "Merchant2") as? SKLabelNode
+            let merchantNode3 = spriteKitScene?.childNode(withName: "Merchant3") as? SKLabelNode
+            
             let priceNode1 = spriteKitScene?.childNode(withName: "Price1") as? SKLabelNode
             let priceNode2 = spriteKitScene?.childNode(withName: "Price2") as? SKLabelNode
             let priceNode3 = spriteKitScene?.childNode(withName: "Price3") as? SKLabelNode
 
             getShoeInfo (shoeName: shoeName, userCompletionHandler: { shoe, error in
                 if let shoe = shoe {
-                    priceNode1?.text = shoe[0].seller + ": " + shoe[0].price
-                    priceNode2?.text = shoe[1].seller + ": " + shoe[1].price
-                    priceNode3?.text = shoe[2].seller + ": " + shoe[2].price
+                    merchantNode1?.text = shoe[0].seller
+                    merchantNode2?.text = shoe[1].seller
+                    merchantNode3?.text = shoe[2].seller
+                    
+                    priceNode1?.text = shoe[0].price
+                    priceNode2?.text = shoe[1].price
+                    priceNode3?.text = shoe[2].price
                 }
             })
           
