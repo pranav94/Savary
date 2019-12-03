@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3KR-i9-5LY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Welcome View Controller-->
+        <scene sceneID="10O-td-rch">
+            <objects>
+                <viewController storyboardIdentifier="WelcomeViewController" id="3KR-i9-5LY" customClass="WelcomeViewController" customModule="Savary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GW0-1n-UNq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press button to start scanning!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPv-0c-Psr">
+                                <rect key="frame" x="0.0" y="238" width="414" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofz-sZ-J0p">
+                                <rect key="frame" x="0.0" y="275" width="414" height="167"/>
+                                <state key="normal" image="start"/>
+                                <connections>
+                                    <action selector="startScanButton:" destination="3KR-i9-5LY" eventType="touchUpInside" id="G0A-xL-vBP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.14117647059999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ofz-sZ-J0p" firstAttribute="top" secondItem="gPv-0c-Psr" secondAttribute="bottom" constant="8" id="2AE-eu-4yQ"/>
+                            <constraint firstItem="gPv-0c-Psr" firstAttribute="leading" secondItem="W2e-tI-5Kt" secondAttribute="leading" id="2vL-6L-K5w"/>
+                            <constraint firstItem="W2e-tI-5Kt" firstAttribute="trailing" secondItem="gPv-0c-Psr" secondAttribute="trailing" id="4OS-VU-nVk"/>
+                            <constraint firstItem="W2e-tI-5Kt" firstAttribute="trailing" secondItem="ofz-sZ-J0p" secondAttribute="trailing" id="8KE-qW-JSv"/>
+                            <constraint firstItem="gPv-0c-Psr" firstAttribute="top" secondItem="W2e-tI-5Kt" secondAttribute="top" constant="194" id="Tcm-uL-17S"/>
+                            <constraint firstItem="ofz-sZ-J0p" firstAttribute="leading" secondItem="W2e-tI-5Kt" secondAttribute="leading" id="hAY-Xn-3iN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="W2e-tI-5Kt"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="txK-U8-Frz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586" y="88"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="Savary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ARViewController" id="BV1-FR-VrT" customClass="ViewController" customModule="Savary" customModuleProvider="target" sceneMemberID="viewController">
                     <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -24,4 +63,7 @@
             <point key="canvasLocation" x="138" y="88"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="start" width="166.5" height="166.5"/>
+    </resources>
 </document>
