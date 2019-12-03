@@ -15,13 +15,13 @@ struct Shoe {
     init(_ dictionary: [String: Any]) {
     self.id = dictionary["id"] as? Int ?? 0
     self.title = dictionary["title"] as? String ?? ""
-    self.seller = dictionary["seller"] as? String ?? ""
+    self.seller = dictionary["source"] as? String ?? ""
     self.price = dictionary["price"] as? String ?? ""
     }
 }
 
 func getShoeInfo(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Error?) -> Void){
-    let urlString = "https://my-json-server.typicode.com/pranav94/Savary/posts?title_like=" + shoeName
+    let urlString = "http://40.85.173.95/title_like/" + shoeName
     let escapedURL = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     guard let url = URL(string: escapedURL!) else {return}
     var model = [Shoe]()
