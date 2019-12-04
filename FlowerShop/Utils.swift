@@ -5,6 +5,7 @@
 //  Created by Pranav on 27/11/19.
 //
 import UIKit
+import AVFoundation
 
 struct Shoe {
     var id: Int
@@ -44,4 +45,27 @@ func getShoeInfo(shoeName: String, userCompletionHandler: @escaping ([Shoe]?, Er
         }
     })
     task.resume()
+}
+
+func toggleTorch(on: Bool) {
+    guard let device = AVCaptureDevice.default(for: AVMediaType.video)
+    else {return}
+
+    if device.hasTorch {
+        do {
+            try device.lockForConfiguration()
+
+            if on == true {
+                device.torchMode = .on // set on
+            } else {
+                device.torchMode = .off // set off
+            }
+
+            device.unlockForConfiguration()
+        } catch {
+            print("Torch could not be used")
+        }
+    } else {
+        print("Torch is not available")
+    }
 }

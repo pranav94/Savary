@@ -9,25 +9,47 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet var sceneView: ARSCNView!;
+    var isCameraLightOn = false;
     
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.showsStatistics = true
+//        sceneView.showsStatistics = true
         let scene = SCNScene(named: "art.scnassets/GameScene.scn")!
         sceneView.scene = scene
-        let image: UIImage = UIImage(named: "logo-no-bg")!
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: 20, y: 40, width: 40, height: 40)
+        
+        let imageView = UIImageView(image: UIImage(named: "logo-no-bg")!)
+        imageView.frame = CGRect(x: 20, y: 20, width: 40, height: 40)
+        
+        let buttonView = UIButton()
+        
+        let iconImage:UIImage? = UIImage(named: "flash.png")
+        buttonView.contentVerticalAlignment = .fill
+        buttonView.contentHorizontalAlignment = .fill
+        buttonView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right:10)
+        buttonView.setImage(iconImage, for: UIControl.State.normal)
+        buttonView.setTitleColor(UIColor.black, for: [])
+        buttonView.frame = CGRect(
+            x: self.view.bounds.size.width - 60,
+            y: 20,
+            width: 40, height: 40
+        )
+        buttonView.addTarget(self, action: #selector(self.buttonPressed), for: .touchUpInside)
+        
         self.view.addSubview(imageView)
+        self.view.addSubview(buttonView)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            toggleTorch(on: true)
+            self!.isCameraLightOn = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let configuration = ARWorldTrackingConfiguration()
         configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "ShoeObjects", bundle: Bundle.main)!
-        sceneView.session.run(configuration)
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,11 +73,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             plane.firstMaterial?.diffuse.contentsTransform = SCNMatrix4Translate(SCNMatrix4MakeScale(1, -1, 1), 0, 1, 0)
             
             let planeNode = SCNNode(geometry: plane)
-            planeNode.eulerAngles.x = -.pi/2
-            planeNode.position = SCNVector3(0, -0.6, 0)
+            planeNode.eulerAngles.x = -.pi / 2
+            planeNode.position = SCNVector3(
+                imageAnchor.transform.columns.3.x,
+                imageAnchor.transform.columns.3.y - 0.05,
+                imageAnchor.transform.columns.3.z - 0.05
+            )
             
             let shoeName = imageAnchor.referenceImage.name!
-
             let merchantNode1 = spriteKitScene?.childNode(withName: "Merchant1") as? SKLabelNode
             let merchantNode2 = spriteKitScene?.childNode(withName: "Merchant2") as? SKLabelNode
             let merchantNode3 = spriteKitScene?.childNode(withName: "Merchant3") as? SKLabelNode
@@ -66,13 +91,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
             getShoeInfo (shoeName: shoeName, userCompletionHandler: { shoe, error in
                 if let shoe = shoe {
-                    merchantNode1?.text = shoe[0].seller
-                    merchantNode2?.text = shoe[1].seller
-                    merchantNode3?.text = shoe[2].seller
-                    
-                    priceNode1?.text = shoe[0].price
-                    priceNode2?.text = shoe[1].price
-                    priceNode3?.text = shoe[2].price
+                    if (shoe.count != 0) {
+                        merchantNode1?.text = shoe[0].seller
+                        merchantNode2?.text = shoe[1].seller
+                        merchantNode3?.text = shoe[2].seller
+                        
+                        priceNode1?.text = shoe[0].price + "$"
+                        priceNode2?.text = shoe[1].price + "$"
+                        priceNode3?.text = shoe[2].price + "$"
+                    }
                 }
             })
           
@@ -87,5 +114,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         return node
+    }
+    
+    @objc func buttonPressed(sender: UIButton){
+        self.isCameraLightOn = !self.isCameraLightOn
+        toggleTorch(on: self.isCameraLightOn)
     }
 }
