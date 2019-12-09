@@ -119,10 +119,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
           
           let planeNode = SCNNode(geometry: plane)
           planeNode.eulerAngles.x = -.pi / 2
+          planeNode.eulerAngles.y = 0
+          planeNode.eulerAngles.z = 0
           planeNode.position = SCNVector3(
-              imageAnchor.transform.columns.3.x,
-              imageAnchor.transform.columns.3.y - 0.05,
-              imageAnchor.transform.columns.3.z - 0.05
+              0,
+              -0.5,
+              0
           )
           
           //let shoeName = imageAnchor.referenceImage.name!
